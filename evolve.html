@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>evolve - evolve your schema to the latest version</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@bukhara.(none)" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#tutorial">TUTORIAL</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>evolve - evolve your schema to the latest version</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>Schema evolution is a critical part of any developers work - the process of
+changing the structure of a database overtime. However, while there are tools to
+help with this task, the are not many that integrate well with version control
+systems.</p>
+<p>SchemaEvolution is a very basic command line application that helps automate
+this process, while allowing you to also track changes in version control.</p>
+<p>Each change to the database is tracked in a single SQL file, which are ordered
+numerically. The database itself has a special column (schema_version.version by
+default) that maintains track of the current version of the database, and the
+<code>evolve</code> command simply applies the set of SQL files after this version.</p>
+<p>
+</p>
+<hr />
+<h1><a name="tutorial">TUTORIAL</a></h1>
+<p>Let's briefly use evolve to track a small project - a little application that
+has users and messages, and messages can be sent between users. The first thing
+we need to do is create our <code>evolution.ini</code> file. This configuration file tells
+evolve how to connect to our database.</p>
+<pre>
+    dsn = dbi:Pg:dbname=messaging
+    username = messaging
+    password = hello</pre>
+<p>The dsn string is the same format as used by <em>DBI</em>, in this case we're using
+the PostgresSQL driver to connect to the messaging database, with the
+credentials &quot;messaging&quot; and &quot;hello&quot;</p>
+<p>Next, we need to add the version column into our database. By default this is
+the version column in the schema_version table.</p>
+<pre>
+    CREATE TABLE schema_version (
+         version INTEGER NOT NULL DEFAULT 0
+    );</pre>
+<p>Great! Now we can start writing some schema evolutions. The first thing we need
+in our system is support for users. Let's go with something basic. In our
+application directory, create the folder &quot;evolutions&quot; and start with our first
+definition, 1_user.sql</p>
+<pre>
+    CREATE TABLE 'user' (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL
+    );</pre>
+<p>Now, with our first schema evolution, all we have to do is run &quot;evolve&quot;</p>
+
+</body>
+
+</html>

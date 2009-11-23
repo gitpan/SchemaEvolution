@@ -4,9 +4,11 @@ META.yml
 Makefile.PL
 README
 dist.ini
-evolution.ini
+evolve.html
 lib/SchemaEvolution.pm
 lib/SchemaEvolution/Types.pm
+pod2htmd.tmp
+pod2htmi.tmp
 script/evolve.pl
 t/release-pod-coverage.t
 t/release-pod-syntax.t

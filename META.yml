@@ -1,5 +1,5 @@
 ---
-abstract: 'manage the evolution of a database with simple files'
+abstract: 'SchemaEvolution - manage the evolution of a database with simple files'
 author:
   - 'Oliver Charles <oliver.g.charles@googlemail.com>'
 generated_by: 'Dist::Zilla version 1.093220'
