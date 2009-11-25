@@ -1,8 +1,6 @@
 package SchemaEvolution;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-
-# ABSTRACT: SchemaEvolution - manage the evolution of a database with simple files
 
 use Moose;
 use MooseX::Has::Sugar;
@@ -165,18 +163,13 @@ sub _build__dbh {
 
 1;
 
-
-
-__END__
-=pod
-
 =head1 NAME
 
-SchemaEvolution - SchemaEvolution - manage the evolution of a database with simple files
+SchemaEvolution - manage the evolution of a database with simple files
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 DESCRIPTION
 
@@ -201,17 +194,4 @@ the new version of the schema.
 
 Returns all the evolution filenames that are after $version.
 
-=head1 AUTHOR
-
-  Oliver Charles <oliver.g.charles@googlemail.com>
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is Copyright (c) 2009 by Oliver Charles.
-
-This is free software, licensed under:
-
-  The Artistic License 2.0
-
 =cut
-
