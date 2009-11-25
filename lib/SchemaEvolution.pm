@@ -1,10 +1,12 @@
 package SchemaEvolution;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
+
+# ABSTRACT: SchemaEvolution - manage the evolution of a database with simple files
 
 use Moose;
 use MooseX::Has::Sugar;
-use MooseX::Types::Moose qw( ArrayRef HashRef Str );
+use MooseX::Types::Moose qw( ArrayRef Bool HashRef Str );
 
 use Config::Tiny;
 use DBI;
@@ -25,8 +27,19 @@ has 'config_file' => (
     required
 );
 
+has 'initialize' => (
+    traits => [qw( Getopt )],
+    isa => Bool,
+    ro,
+    default => 0,
+);
+
 sub run {
     my $self = shift;
+
+    $self->initialize_table if ($self->initialize);
+
+
     my $dbh = $self->_dbh;
     my ($column, $table) = ($self->_version_column, $self->_version_table);
     my ($version) = $dbh->selectrow_array("SELECT $column FROM $table");
@@ -51,6 +64,14 @@ sub run {
     print "\nSchema evolution completed (or terminated)\n";
     print "New version is: $new_version\n";
     $self->_set_version($new_version);
+}
+
+sub initialize_table {
+    my $self = shift;
+    my $dbh = $self->_dbh;
+    my ($column, $table) = ($self->_version_column, $self->_version_table);
+    $dbh->do("CREATE TABLE $table ( $column INTEGER NOT NULL DEFAULT 0 )");
+    $dbh->do("INSERT INTO $table ( $column) VALUES ( 0 )");
 }
 
 sub apply_evolution {
@@ -163,13 +184,18 @@ sub _build__dbh {
 
 1;
 
+
+
+__END__
+=pod
+
 =head1 NAME
 
-SchemaEvolution - manage the evolution of a database with simple files
+SchemaEvolution - SchemaEvolution - manage the evolution of a database with simple files
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 DESCRIPTION
 
@@ -194,4 +220,17 @@ the new version of the schema.
 
 Returns all the evolution filenames that are after $version.
 
+=head1 AUTHOR
+
+  Oliver Charles <oliver.g.charles@googlemail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2009 by Oliver Charles.
+
+This is free software, licensed under:
+
+  The Artistic License 2.0
+
 =cut
+

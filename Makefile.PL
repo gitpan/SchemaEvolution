@@ -10,9 +10,9 @@ WriteMakefile(
   DISTNAME  => 'SchemaEvolution',
   NAME      => 'SchemaEvolution',
   AUTHOR    => "Oliver\ Charles\ \<oliver\.g\.charles\@googlemail\.com\>",
-  ABSTRACT  => "manage\ the\ evolution\ of\ a\ database\ with\ simple\ files",
-  VERSION   => '0.02',
-  EXE_FILES => [ qw(script/evolve.pl) ],
+  ABSTRACT  => "SchemaEvolution\ \-\ manage\ the\ evolution\ of\ a\ database\ with\ simple\ files",
+  VERSION   => '0.03',
+  EXE_FILES => [ qw(script/evolve.pl script/ChangeLog) ],
   (eval { ExtUtils::MakeMaker->VERSION(6.31) } ? (LICENSE => '') : ()),
   PREREQ_PM    => {
     "File::Find::Rule" => '0',
